@@ -18,3 +18,8 @@ npm install truffle@4.1.7 -g
 9. Payable
 10. Deposit
 11. Re-entrancy
+12. Re-entrancy Fix
+13. Timed Voting
+14. Function Signatures
+15. Events
+16. Destruct
