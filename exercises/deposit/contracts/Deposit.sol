@@ -5,8 +5,13 @@ import "./Ownable.sol";
 
 contract Deposit is Ownable {
     // allow contract to accept funds upon creation
-
-    // allow contract to accept funds via regular transfer
+    constructor() public payable {}
 
     // allow owner to withdraw the entire balance
+    function withdraw() public onlyOwner {
+        owner.transfer(address(this).balance);
+    }
+
+    // allow contract to accept funds via regular transfer
+    function () public payable {}
 }
