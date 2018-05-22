@@ -17,11 +17,13 @@ contract TimedVoting {
 
     modifier onlyWhenOpen() {
         // implement modifier that requires voting to be open at the time of execution
+        require(block.timestamp < endTimestamp && block.number >= startBlock);
         _;
     }
 
     modifier onlyOneVote() {
         // implement modifier that disallows voting same voter more than once
+        require(voted[msg.sender] == false);
         _;
     }
 
@@ -37,11 +39,21 @@ contract TimedVoting {
         endTimestamp = _endTimestamp;
 
         // set isCandidate to true for each candidate
+        for (uint i = 0; i < candidates.length; i++) {
+            results[candidates[i]].isCandidate = true;
+        }
     }
 
     function vote(address _candidate) public onlyWhenOpen onlyOneVote returns (bool) {
         // 1. make sure candidate address points to genuine candidate
+        require(results[_candidate].isCandidate == true);
+
         // 2. increment number of votes
+        results[_candidate].votes += 1;
+
         // 3. store information that voter already voted
+        voted[msg.sender] = true;
+
+        return true;
     }
 }
